@@ -1,0 +1,103 @@
+package Pack1;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class NewCharacterCount implements ActionListener {
+	
+	 JFrame frame;
+     JTextField sentencefield,charfield;
+     JButton Submit;
+     NewCharacterCount (){
+         frame=new JFrame("Charactercounting Game");
+         frame.setLayout(null);
+         frame.setBounds(200,200,150,100);
+         //frame.setBackground(Color.BLACK);
+         frame.getContentPane().setBackground(new Color(173,216,230));
+         //frame.getContentPane().setBackground(new Color(160,134,150));
+         frame.setSize(700,500);
+         frame.setLocation(280,100);
+         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+         JLabel sentenceLabel=new JLabel("Enter the sentence");
+         sentenceLabel.setBounds(10,100,200,20);
+         sentenceLabel.setFont(new Font("Lacida Bright",Font.BOLD,20));
+         sentenceLabel.setForeground(new Color(128,0,128));
+         frame.add(sentenceLabel);
+         
+         sentencefield=new JTextField("");
+         sentencefield.setBounds(220,100,300,23);
+         sentencefield.setFont(new Font("Arial",Font.BOLD,11));
+         sentencefield.setForeground(Color.red);
+         
+         frame.add(sentencefield);
+         
+         JLabel sentenceLabel1=new JLabel("CHARACTER COUNT");
+         sentenceLabel1.setBounds(230,30,200,20);
+         sentenceLabel1.setFont(new Font("Cambria",Font.BOLD,20));
+         sentenceLabel1.setForeground(Color.blue);
+         frame.add(sentenceLabel1);
+         
+
+         JLabel charLabel=new JLabel("Enter the character");
+         charLabel.setBounds(10,150,200,23);
+         charLabel.setFont(new Font("Cambria",Font.BOLD,20));
+         charLabel.setForeground(new Color(128,0,128));
+         frame.add(charLabel);
+         
+         charfield=new JTextField("c");
+         charfield.setBounds(220,150,150,23);
+         charfield.setFont(new Font("Arial",Font.BOLD,12));
+         charfield.setForeground(Color.red);
+         frame.add(charfield);
+
+         JButton Submit=new JButton("Submit");
+         Submit.setBounds(220, 230, 100, 40);
+         Submit.setBackground(new Color(128,0,128));
+         Submit.setForeground(Color.white);
+         Submit.addActionListener(this);
+         frame.add(Submit);
+
+         frame.setVisible(true);
+
+        
+
+     }
+     
+     public void actionPerformed(ActionEvent e) {
+         String sentence = sentencefield.getText();
+         String charInput = charfield.getText();
+
+         // Validate input
+         if (charInput.length() != 1) {
+             JOptionPane.showMessageDialog(frame, "Please enter exactly one character.", "Input Error", JOptionPane.ERROR_MESSAGE);
+             return;
+         }
+
+         char character = charInput.toLowerCase().charAt(0); // Convert input character to lowercase
+         int count = 0;
+
+         for (char c : sentence.toLowerCase().toCharArray()) { // Convert sentence to lowercase
+             if (c == character) {
+                 count++;
+             }
+         }
+
+         JOptionPane.showMessageDialog(frame,
+             "Number of occurrences of '" + character + "' in the sentence: " + count,
+             "Count Result",
+             JOptionPane.INFORMATION_MESSAGE
+         );
+     }
+
+     public static void main(String[] args) {
+         new NewCharacterCount();
+     }
+}
+
+	
+
+
+       
