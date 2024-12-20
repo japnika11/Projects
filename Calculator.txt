@@ -1,0 +1,245 @@
+package Pack1;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.*;
+import java.awt.event.*;
+
+
+public class NewCalci implements ActionListener {
+	    JFrame frame;
+	    JTextField textfield;
+	    JButton addButton, subButton, mulButton, divButton, decButton, equalButton, delButton, clrButton, negButton;
+	    JPanel panel;
+	   
+	    Font myFont = new Font("Arial", Font.BOLD, 30);
+	    JButton numberButton[]=new JButton[10];
+	    JButton operationButton[] = new JButton[9];
+	    double num1= 0, num2 = 0, result = 0;
+	    char operator;
+	    
+
+	   NewCalci() {
+	        //frame = new JFrame("Calculator");
+	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setSize(400, 550);
+	        //frame.setLayout(null);
+		 // frame.setBackground(Color.blue);
+		 
+			
+			//frame.setBackground(Color.pink);
+	        textfield = new JTextField();
+	        textfield.setBounds(50, 25, 300, 50);
+	        textfield.setFont(myFont);
+	        textfield.setBackground(Color.white);
+	       // textfield.setBackground(new Color(0,135,200));
+	       // frame.add(textfield);
+	       // textfield.setBackground(Color.gray);
+
+	        addButton = new JButton("+");
+	        addButton.setBounds(100,100,200,300);
+	        subButton = new JButton("-");
+	        mulButton = new JButton("*");
+	        divButton = new JButton("/");
+	        decButton = new JButton(".");
+	        equalButton = new JButton("=");
+	        delButton = new JButton("Del");
+	        clrButton = new JButton("C");
+	        negButton = new JButton("(-)");
+
+	        operationButton[0] = addButton;
+	        operationButton[1] = subButton;
+	        operationButton[2] = divButton;
+	        operationButton[3] = mulButton;
+	        operationButton[4] = decButton;
+	        operationButton[5] = equalButton;
+	        operationButton[6] = delButton;
+	        operationButton[7] = clrButton;
+	        operationButton[8] = negButton;
+	        addButton.setBackground(Color.blue);
+	        subButton.setBackground(Color.blue);
+	        mulButton.setBackground(Color.blue);
+	        decButton.setBackground(Color.blue);
+	        equalButton.setBackground(Color.blue);
+	        delButton.setBackground(Color.blue);
+	        clrButton.setBackground(Color.blue);
+	        negButton.setBackground(Color.blue);
+	        
+
+
+
+	     for (int i = 0; i < 9; i++) {
+	            operationButton[i].setFont(myFont);
+	            operationButton[i].addActionListener(this);
+	            //operationButton[i].setBounds(50 + (i % 3) * 100, 100 + (i / 3) * 100, 100, 100);
+	            //frame.add(operationButton[i]);
+	        }
+	        for(int i=0;i<10;i++) {
+	        	numberButton[i] = new JButton(String.valueOf(i)); 
+	            numberButton[i].setFont(myFont);
+	            numberButton[i].addActionListener(this);
+	            numberButton[i].setFocusable(false);
+	        }
+
+	        //-panel
+	        panel=new JPanel();
+	        panel.setBounds(50,100,300,300);
+	        panel.setLayout(new GridLayout(4,4,10,10));
+	        panel.setBackground(Color.white);
+	             
+	        //panel set backgrounf visible
+	        panel.add(numberButton[1]);
+	        panel.add(numberButton[2]);
+	        panel.add(numberButton[3]);
+	        panel.add(addButton);
+	        panel.add(numberButton[4]);
+	        panel.add(numberButton[5]);
+	        panel.add(numberButton[6]);
+	        panel.add(subButton);
+	        panel.add(numberButton[7]);
+	        panel.add(numberButton[8]); 
+	        panel.add(numberButton[9]);
+	        panel.add(mulButton); 
+	        panel.add(numberButton[0]);
+	        panel.add(decButton);
+	        panel.add(divButton);
+	        panel.add(equalButton);
+	        
+	        delButton.setBounds (50,420,100,50);
+
+	        negButton.setBounds (150,420, 100, 50); 
+	        
+	        clrButton.setBounds (250, 420, 100,50);	
+	        numberButton[1].setBackground(new Color(128,0,128));
+	        numberButton[1].setForeground(Color.cyan);
+	        numberButton[2].setBackground(new Color(128,0,128));
+	        numberButton[2].setForeground(Color.cyan);
+	        numberButton[3].setBackground(new Color(128,0,128));
+	        numberButton[3].setForeground(Color.cyan);
+	        numberButton[4].setBackground(new Color(128,0,128));
+	        numberButton[4].setForeground(Color.cyan);
+	        numberButton[5].setBackground(new Color(128,0,128));
+	        numberButton[5].setForeground(Color.cyan);
+	        numberButton[6].setBackground(new Color(128,0,128));
+	        numberButton[6].setForeground(Color.cyan);
+	        numberButton[7].setBackground(new Color(128,0,128));
+	        numberButton[7].setForeground(Color.cyan);
+	        numberButton[8].setBackground(new Color(128,0,128));
+	        numberButton[8].setForeground(Color.cyan);
+	        numberButton[9].setBackground(new Color(128,0,128));;
+	        numberButton[9].setForeground(Color.cyan);
+	        numberButton[0].setBackground(new Color(128,0,128));;
+	        numberButton[0].setForeground(Color.cyan);
+	        decButton.setBackground(new Color(128,0,128));
+	        decButton.setForeground(Color.cyan);
+	        divButton.setBackground(new Color(128,0,128));
+	        divButton.setForeground(Color.cyan);
+	        //Frame
+	      //Frame
+	        
+   
+	        frame=new JFrame();
+	        frame.setSize (395,550);
+	        frame.setLayout (null);
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.getContentPane().setBackground(Color.gray);
+	        frame.add(delButton);
+	        frame.add(clrButton);
+	        frame.add(textfield);
+	        frame.add(negButton);
+	        frame.add(panel);
+	        frame.setVisible(true);
+	       
+	    }
+
+	    public void actionPerformed (ActionEvent e) {
+	    	
+	        for (int i=0;i<10;i++) {
+
+	            if (e.getSource()==numberButton [i]) {
+
+	                   textfield.setText(textfield.getText().concat(String.valueOf(i)));
+	            }
+
+	        }
+
+	        if (e.getSource()==decButton) {
+
+	            textfield.setText (textfield.getText().concat("."));
+	            
+	        }
+
+	        if(e.getSource() ==addButton) {
+	        	num1=Double.parseDouble(textfield.getText());
+	            operator='+';
+	            textfield.setText("");
+
+	        }
+	        if(e.getSource() ==mulButton) {
+	        	num1=Double.parseDouble(textfield.getText());
+	            operator='*';
+	            textfield.setText("");
+
+	        }
+	        if(e.getSource() ==subButton) {
+	            num1=Double.parseDouble(textfield.getText());
+	            operator='-';
+	            textfield.setText("");
+
+	        }
+	        if(e.getSource() ==divButton) {
+	        	num1=Double.parseDouble(textfield.getText());
+	            operator='/';
+	            textfield.setText("");
+
+	        }
+	        if(e.getSource() == negButton) {
+	            double temp = Double.parseDouble(textfield.getText());
+	            temp=temp*-1;
+	            textfield.setText(String.valueOf(temp));
+	        }
+
+	     
+	        if(e.getSource() ==equalButton) {
+	        	double num2=Double.parseDouble(textfield.getText());
+	          switch(operator) {
+	          case '+':
+	        	  result=num1+num2;
+	        	  break;
+	          case '-':
+	        	  result=num1-num2;
+	        	  break;
+	          case '*':
+	        	  result=num1*num2;
+	        	  break;
+	          case '/':
+	        	  result=num1/num2;
+	        	  break;
+	          }
+	          textfield.setText(String.valueOf(result));
+	          num1=result;
+
+	        }
+	        if(e.getSource()==clrButton) {
+	        textfield.setText("");
+	        }
+	        if(e.getSource()==delButton) {
+	        	String stringDelete=textfield.getText();
+	        	textfield.setText("");
+	        	for(int i=0;i<stringDelete.length()-1;i++) {
+	        		textfield.setText(textfield.getText()+stringDelete.charAt(i));
+	        	}
+	        }
+	   
+	        
+	        //frame.setVisible(true);
+	    }
+
+	    public static void main(String[] args) {
+	        new NewCalci();
+	    }
+
+	    //@Override
+	    //public void actionPerformed(ActionEvent e) {
+	        // Handle button actions here
+	}
