@@ -1,0 +1,201 @@
+package Pack1;
+
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.util.*;
+import java.text.*;
+import java.net.*;
+import java.io.*;
+
+public class ClientOne implements ActionListener {
+	
+	
+	JTextField text;
+    static JPanel a1;
+    static Box vertical = Box.createVerticalBox();
+    static JFrame f = new JFrame();
+    static DataOutputStream dout;
+    
+    ClientOne() {
+        
+        f.setLayout(null);
+        
+        JPanel p1 = new JPanel();
+        p1.setBackground(new Color(7, 94, 84));
+        p1.setBounds(0, 0, 450, 75);
+        p1.setLayout(null);
+        f.add(p1);
+        
+        ImageIcon i1 = new ImageIcon(getClass().getResource("back.png"));
+        Image i2 = i1.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT);
+        ImageIcon i3 = new ImageIcon(i2);
+        JLabel back = new JLabel(i3);
+        back.setBounds(10, 30, 25, 25);
+        back.setForeground(Color.WHITE);
+        p1.add(back);
+        
+        back.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent ae) {
+                System.exit(0);
+            }
+        });
+        
+        ImageIcon i4 = new ImageIcon(getClass().getResource("human.png"));
+        Image i5 = i4.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        ImageIcon i6 = new ImageIcon(i5);
+        JLabel profile = new JLabel(i6);
+        profile.setBounds(40, 10, 50, 50);
+        p1.add(profile);
+        
+        // Corrected code for zoom image
+        ImageIcon i51 = new ImageIcon(getClass().getResource("business.png"));
+        Image i61 = i51.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        ImageIcon i62 = new ImageIcon(i61);
+        JLabel zoom = new JLabel(i62);
+        zoom.setBounds(275, 15, 54, 54);
+        zoom.setBackground(Color.white);
+        zoom.setForeground(Color.white);
+        p1.add(zoom);
+        
+        ImageIcon i10 = new ImageIcon(getClass().getResource("telephone (1).png"));
+        Image i11 = i10.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        ImageIcon i12 = new ImageIcon(i11);
+        JLabel phone = new JLabel(i12);
+        phone.setBounds(330, 20, 45, 45);
+        p1.add(phone);
+        
+        ImageIcon i13 = new ImageIcon(getClass().getResource("settings.png"));
+        Image i14 = i13.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        ImageIcon i15 = new ImageIcon(i14);
+        JLabel morevert = new JLabel(i15);
+        morevert.setBounds(380, 20, 45, 45);
+        p1.add(morevert);
+        
+        JLabel name = new JLabel("Person 1");
+        name.setBounds(100, 15, 100, 18);
+        name.setForeground(Color.white);
+        name.setFont(new Font("SAN_SERIF", Font.BOLD, 20));
+        p1.add(name);
+        
+        JLabel status = new JLabel("ONLINE");
+        status.setBounds(110, 35, 100, 18);
+        status.setFont(new Font("SAN_SERIF", Font.BOLD, 10));
+        status.setForeground(Color.white);
+        p1.add(status);
+        
+        a1 = new JPanel();
+        a1.setBounds(5, 75, 440, 570);
+        f.add(a1);
+        
+        text = new JTextField();
+        text.setBounds(5, 655, 310, 40);
+        text.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
+        f.add(text);
+        
+        JButton send = new JButton("send");
+        send.setBounds(320, 655, 123, 40);
+        send.setBackground(new Color(7, 94, 84));
+        send.setForeground(Color.white);
+        send.addActionListener(this);
+        send.setFont(new Font("SAN_SERIF", Font.PLAIN, 16));
+        f.add(send);
+        
+        f.setSize(450, 700);
+        f.setLocation(200, 0);
+        f.setUndecorated(true);
+        f.getContentPane().setBackground(Color.white);
+        
+        f.setVisible(true);
+    }
+    
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            String out = text.getText();
+           
+            JPanel p2 = formatLabel(out, new Color(37, 211, 102), Color.white);
+            
+            a1.setLayout(new BorderLayout());
+            
+            JPanel right = new JPanel(new BorderLayout());
+            right.add(p2, BorderLayout.LINE_END);
+            vertical.add(right);
+            vertical.add(Box.createVerticalStrut(15));
+            
+            a1.add(vertical, BorderLayout.PAGE_START);
+            
+            dout.writeUTF(out);
+            
+            text.setText("");
+            
+            f.repaint();
+            f.invalidate();
+            f.validate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static JPanel formatLabel(String out, Color bgColor, Color textColor) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        JLabel output = new JLabel("<html><p style=\"width:150px\">" + out + "</p><html>");
+        output.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        output.setBackground(bgColor); 
+        output.setForeground(textColor); 
+        output.setOpaque(true);
+        output.setBorder(new EmptyBorder(15, 15, 15, 50));
+        FontMetrics fm = output.getFontMetrics(output.getFont());
+        int textWidth = fm.stringWidth(out) + 30; 
+        
+        if (textWidth > 250) {
+            textWidth = 250;
+            output.setText("<html><p style=\"width:250px;\">" + out + "</p></html>");
+        }
+
+        output.setPreferredSize(new Dimension(textWidth, output.getPreferredSize().height));
+        
+        panel.add(output);
+        
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        
+        JLabel time = new JLabel();
+        time.setText(sdf.format(cal.getTime()));
+        
+        panel.add(time);
+        return panel;
+    }
+
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		new ClientOne();
+        try {
+            Socket s = new Socket("127.0.0.1",2596); 
+            DataInputStream din = new DataInputStream(s.getInputStream());
+            dout = new DataOutputStream(s.getOutputStream());
+            while (true) {
+                a1.setLayout(new BorderLayout());
+                String msg = din.readUTF();
+                JPanel panel = formatLabel(msg, Color.white, Color.black);
+                
+                JPanel left = new JPanel(new BorderLayout());
+                left.add(panel, BorderLayout.LINE_START);
+                vertical.add(left);
+                
+                vertical.add(Box.createVerticalStrut(15));
+                a1.add(vertical, BorderLayout.PAGE_START);
+                
+                f.validate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+	}
+
+}
