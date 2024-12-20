@@ -1,0 +1,110 @@
+package Pack1;
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+
+public class NumberGuessingGame implements ActionListener {
+	 private JFrame frame;
+	    private JTextField textField;
+	    private JButton submitButton;
+	    private JLabel message1, message2, resultText;
+	    private int randomNumber;
+	    private int attempts = 3;
+	    private static final int MAX_ATTEMPTS = 3;
+
+	    public NumberGuessingGame() {
+	        frame = new JFrame("NumberGuessing Game");
+	        frame.setLayout(null);
+	        frame.setSize(700, 500);
+	        frame.setLocationRelativeTo(null);
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.getContentPane().setBackground(new Color(230, 240, 200));
+
+	        message1 = new JLabel("Welcome to Number Guessing Game");
+	        message1.setBounds(260, 100, 600, 40);
+	        message1.setFont(new Font("Lacida Bright", Font.BOLD, 15));
+
+	        message2 = new JLabel("Enter a number between 1 and 100");
+	        message2.setBounds(300, 150, 500, 40);
+	        message2.setFont(new Font("Lacida Bright", Font.BOLD, 10));
+
+	        textField = new JTextField();
+	        textField.setBounds(250, 200, 280, 40);
+
+	        submitButton = new JButton("Submit");
+	        submitButton.setBounds(250, 250, 100, 40);
+	        submitButton.setBackground(new Color(245, 247, 255));
+	        submitButton.setForeground(Color.BLACK);
+	        submitButton.addActionListener(this);
+
+	        resultText = new JLabel();
+	        resultText.setBounds(280, 300, 500, 40);
+	        resultText.setFont(new Font("Lacida Bright", Font.PLAIN, 20));
+
+	        frame.add(textField);
+	        frame.add(submitButton);
+	        frame.add(message1);
+	        frame.add(message2);
+	        frame.add(resultText);
+
+	        frame.setVisible(true);
+	        generateRandomNumber();
+	    }
+
+	    private void generateRandomNumber() {
+	        Random r = new Random();
+	        randomNumber = r.nextInt(100) + 1;
+	    }
+
+	    public void actionPerformed(ActionEvent e) {
+	        int playerGuess;
+	        try {
+	            playerGuess = Integer.parseInt(textField.getText());
+	            
+
+	            if (playerGuess < 1 || playerGuess > 100) {
+	                resultText.setText("Please enter a number between 1 and 100");
+	                resultText.setForeground(Color.RED);
+	                attempts++;
+	            } else {
+	                if (playerGuess > randomNumber) {
+	                    resultText.setText("Oops! You entered too high a number");
+	                    resultText.setForeground(Color.RED);
+	                    attempts++;
+	                } else if (playerGuess < randomNumber) {
+	                    resultText.setText("Oops! You entered too low a number");
+	                    resultText.setForeground(Color.RED);
+	                    attempts++;
+	                } else {
+	                    resultText.setText("Congratulations! You entered the correct number");
+	                    resultText.setForeground(Color.BLACK);
+	                    generateRandomNumber();
+	                   
+	                }
+
+	                if (attempts >= MAX_ATTEMPTS) {
+	                    resultText.setText("You've exceeded the maximum attempts. The correct number was: " + randomNumber);
+	                    resultText.setForeground(Color.RED);
+	                    attempts = 0;
+	                }
+	            }
+	            textField.setText("");
+	        } catch (NumberFormatException ex) {
+	            resultText.setText("Please enter a valid number");
+	            resultText.setForeground(Color.RED);
+	        }
+	    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+
+
+   
+  
