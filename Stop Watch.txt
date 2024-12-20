@@ -1,0 +1,160 @@
+package Pack1;
+import java.awt.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+ 
+
+import javax.swing.*;
+
+public class NewGame implements ActionListener {
+	
+		JFrame frame=new JFrame("stopwatch");
+		JButton startButton=new JButton("STOP");
+		JButton stopButton=new JButton("START");
+		JButton restartButton=new JButton("RESTART");
+		JLabel timeLabel=new JLabel();
+		JLabel result;
+		boolean started=false;
+		int seconds=0;
+		int minutes=0;
+		int hours=0;
+		int elapsedTime=0;
+		String stringSecond=String.format("%02d",seconds);
+		String stringMinutes=String.format("%02d",minutes);
+		String stringHours=String.format("%02d",hours);
+		
+		//timer
+		Timer timer=new Timer(1000,new ActionListener() { 
+			public void actionPerformed(ActionEvent ex) {
+				elapsedTime=elapsedTime+1000;
+				seconds=(elapsedTime/1000)%60;
+				minutes=(elapsedTime/60000)%60;
+				hours=(elapsedTime/3600000)%60;
+				String stringSecond=String.format("%02d",seconds);
+				String stringMinutes=String.format("%02d",minutes);
+				String stringHours=String.format("%02d",hours);
+				timeLabel.setText(stringHours+" : "+stringMinutes+" : "+stringSecond);
+				
+				
+			}
+		}
+		);
+		
+	    
+
+		NewGame(){
+
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(450,450);
+		frame.setLocation(400,100);
+		frame.setLayout(null);
+		frame.getContentPane().setBackground(Color.black);
+		//frame.setBackground(Color.pink);
+		frame.setForeground(Color.blue);
+		frame.setSize(700,550);
+		
+		
+		timeLabel.setText(stringHours+" : "+stringMinutes+" : "+stringSecond);
+		timeLabel.setBounds(190,100,320,70);
+		timeLabel.setFont(new Font("Verdana",Font.BOLD,35));
+		timeLabel.setBorder(BorderFactory.createBevelBorder(1));
+		timeLabel.isOpaque();
+		timeLabel.setHorizontalAlignment(JTextField.CENTER);
+		timeLabel.setForeground(Color.blue);
+		
+		
+		timeLabel.setBackground(Color.magenta);
+
+		startButton.setBounds(310,310,90,50);
+		startButton.setFont(new Font("Verdana",Font.PLAIN,15));
+		startButton.setFocusable(false);
+		startButton.setBackground(Color.cyan);
+		startButton.setForeground(Color.black);
+		
+		
+		startButton.addActionListener(this);
+		startButton.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+
+		stopButton.setBounds(310,250,90,50);
+		stopButton.setFont(new Font("Verdana",Font.PLAIN,15));
+		stopButton.setBackground(Color.cyan);
+		stopButton.setFocusable(false);
+		stopButton.addActionListener(this);
+		stopButton.setForeground(Color.black);
+		stopButton.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+
+		restartButton.setBounds(310,370,90,50);
+		restartButton.setFont(new Font("Verdana",Font.PLAIN,12));
+		restartButton.setFocusable(false);
+		restartButton.setBackground(Color.CYAN);
+		restartButton.addActionListener(this);
+		restartButton.setForeground(Color.black);
+		restartButton.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+		
+		
+		
+		JLabel result=new JLabel("");
+		result.setFont(new Font("Arial Unicode MS",Font.PLAIN,20));
+		result.setBounds(250, 160, 400, 60);
+		result.setText("  "+"Hrs"+"       "+"Min"+"        "+"Sec");
+		result.setForeground(Color.magenta);
+
+
+
+		frame.add(timeLabel);
+		frame.add(startButton);
+		frame.add(stopButton);
+		frame.add(restartButton);
+		frame.add(result);
+	   }
+		
+
+		void start(){
+			timer.start();
+
+
+		}
+	    void stop(){
+	    	timer.stop();
+
+		}
+		void restart(){
+			timer.stop();
+			seconds=0;
+			minutes=0;
+			hours=0;
+			elapsedTime=0;
+			String stringSecond=String.format("%02d", seconds);
+			String stringMinutes=String.format("%02d", minutes);
+			String stringHours=String.format("%02d", hours);
+			timeLabel.setText(stringHours+" : "+stringMinutes+" : "+stringSecond);
+			
+			
+
+		}
+		public void actionPerformed(ActionEvent e){
+			if(e.getSource()==stopButton){
+				started=true;
+				start();
+				startButton.setText("STOP");
+
+		}
+			else {
+				started=false;
+				stop();
+				stopButton.setText("START");
+			}
+			if(e.getSource()==restartButton){
+			restart();
+		}
+		
+	  }
+
+		public static void main(String[] args) {
+			new NewGame();
+
+		}
+	}
